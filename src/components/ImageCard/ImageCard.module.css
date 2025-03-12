@@ -1,0 +1,43 @@
+.card {
+  width: 400px;
+  height: 267px;
+  object-fit: cover;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.cardDescription {
+  padding: 5px;
+  min-height: 80px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+
+  background-color: #13142b96;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.cardLikes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.likeIcon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  fill: rgba(100, 108, 255, 0.584);
+}
+
+.cartText {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
