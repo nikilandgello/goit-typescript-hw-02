@@ -1,6 +1,11 @@
+import React from 'react';
 import { RingLoader } from 'react-spinners';
 
-const Loader = ({ loading }) => {
+interface LoaderProps {
+  loading: boolean;
+}
+
+const Loader: React.FC<LoaderProps> = ({ loading }) => {
   return (
     <>
       <RingLoader

@@ -1,6 +1,7 @@
+import React from 'react';
 import css from './ErrorMessage.module.css';
 
-function ErrorMessage() {
+const ErrorMessage: React.FC = () => {
   return (
     <div className={css.error}>
       <svg width={50} height={50} className={css.errorIcon}>
@@ -19,6 +20,6 @@ function ErrorMessage() {
       </p>
     </div>
   );
-}
+};
 
 export default ErrorMessage;

@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import css from './SearchBar.module.css';
 
 import showToast from '../../utils/toastService';
 import { motion } from 'framer-motion';
 
-const SearchBar = ({ onSubmit }) => {
+interface SearchBarProps {
+  onSubmit: (newQuery: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -13,11 +17,11 @@ const SearchBar = ({ onSubmit }) => {
 
   const letters = Array.from('SearchApp');
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
 
-    const form = e.target;
-    const query = form.elements.search.value;
+    const form = event.target as HTMLFormElement;
+    const query = (form.elements.namedItem('search') as HTMLInputElement).value;
 
     if (!query.trim()) {
       showToast('info', 'message');
@@ -39,8 +43,8 @@ const SearchBar = ({ onSubmit }) => {
           height={30}
           initial={{ y: -100, x: 215 }}
           animate={{
-            y: isVisible && 0,
-            x: isVisible && 0,
+            y: isVisible ? 0 : -100,
+            x: isVisible ? 0 : 215,
           }}
           transition={{
             y: { duration: 1, delay: 0.5 },

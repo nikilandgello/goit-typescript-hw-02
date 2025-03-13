@@ -1,8 +1,12 @@
 import ReactModal from 'react-modal';
 import css from './ImageModal.module.css';
 import { useEffect } from 'react';
+import { ImageModalProps } from './ImageModal.types';
 
-const ImageModal = ({ onClose, isOpen, data = {} }) => {
+const ImageModal = ({ onClose, isOpen, data }: ImageModalProps) => {
+  const appElement = document.getElementById('root') as HTMLElement;
+  ReactModal.setAppElement(appElement);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -23,7 +27,7 @@ const ImageModal = ({ onClose, isOpen, data = {} }) => {
       shouldCloseOnOverlayClick={true}
       ariaHideApp={false}
       closeTimeoutMS={0}
-      appElement={document.getElementById('root')}
+      appElement={appElement}
       className={css.modal}
       overlayClassName={css.overlay}
     >

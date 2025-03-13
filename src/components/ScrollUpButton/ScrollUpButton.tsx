@@ -2,9 +2,9 @@ import { useState } from 'react';
 import css from './ScrollUpButton.module.css';
 
 const ScrollUpButton = () => {
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isAtTop, setIsAtTop] = useState<boolean>(true);
 
-  const scrollToTop = () => {
+  const scrollToTop = (): void => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -12,7 +12,7 @@ const ScrollUpButton = () => {
     setIsAtTop(false);
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (): void => {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth',

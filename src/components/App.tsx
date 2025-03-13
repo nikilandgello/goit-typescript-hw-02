@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 import ErrorMessage from './ErrorMessage/ErrorMessage';
@@ -12,30 +12,33 @@ import { getImages } from '../services/api';
 import { Toaster } from 'react-hot-toast';
 import showToast from '../utils/toastService';
 import ScrollUpButton from './ScrollUpButton/ScrollUpButton';
+import { DataAttribute } from './App.types';
 
-function App() {
-  const [dataImages, setDataImages] = useState([]);
-  const [totalPage, setTotalPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState('');
+const App: React.FC = () => {
+  const [dataImages, setDataImages] = useState<DataAttribute[]>([]);
+  const [totalPage, setTotalPages] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
-  const [modal, setModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState({});
+  const [modal, setModal] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<DataAttribute | null>(
+    null
+  );
 
-  const imageRefs = useRef([]);
+  const imageRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  useEffect(() => {
+  useEffect((): void | (() => void) => {
     if (!query) return;
 
-    const fetchImages = async () => {
+    const fetchImages = async (): Promise<void> => {
       try {
         setError(false);
         setLoading(true);
+
         const data = await getImages(page, query);
-        console.log(data);
 
         if (data.total_pages === 0) {
           showToast('info', 'noSearchImages');
@@ -55,7 +58,7 @@ function App() {
           showToast('success', 'message');
           return;
         }
-      } catch (error) {
+      } catch (error: any) {
         setError(true);
 
         if (error.status === 403) {
@@ -72,7 +75,7 @@ function App() {
     fetchImages();
   }, [query, page]);
 
-  const handleImageLoad = index => {
+  const handleImageLoad = (index: number): void => {
     if (page !== 1 && index === dataImages.length - 1) {
       scrollNewImg();
     }
@@ -90,24 +93,23 @@ function App() {
     }
   };
 
-  const hendleSearch = newQuery => {
+  const hendleSearch = (newQuery: string): void => {
     if (query === newQuery) return;
     setQuery(newQuery);
     setPage(1);
     setDataImages([]);
   };
 
-  const heandleLoadMore = () => setPage(prev => prev + 1);
+  const heandleLoadMore = (): void => setPage(prev => prev + 1);
 
-  const openModal = image => {
+  const openModal = (image: DataAttribute): void => {
     setSelectedImage(image);
-    console.log(image);
     setModal(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModal(false);
-    setSelectedImage({});
+    setSelectedImage(null);
   };
 
   return (
@@ -134,6 +136,6 @@ function App() {
       <ImageModal data={selectedImage} onClose={closeModal} isOpen={modal} />
     </div>
   );
-}
+};
 
 export default App;
